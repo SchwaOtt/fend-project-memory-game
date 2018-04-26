@@ -2,6 +2,14 @@
  * Create a list that holds all of your cards
  */
 
+ const cards = ['fa-anchor', 'fa-anchor',
+               'fa-bicycle', 'fa-bicycle',
+               'fa-bolt', 'fa-bolt',
+               'fa-bomb', 'fa-bomb',
+               'fa-cube', 'fa-cube',
+               'fa-diamond', 'fa-diamond',
+               'fa-leaf', 'fa-leaf',
+               'fa-paper-plane-o', 'fa-paper-plane-o'];
 
 /*
  * Display the cards on the page
@@ -9,6 +17,39 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+
+ const cardsDeck = shuffle(cards);
+
+ function addCards () {
+
+ //Create a "fragment" document for faster running.
+
+   const fragment = document.createDocumentFragment();
+
+   for (let i = 0; i < 16; i++) {
+
+ //Create "li" items and add initial classes to them.
+
+       const newElement = document.createElement('li');
+       newElement.classList.add('card', 'open', 'show');
+
+ //Create "i" items and add classes to them.
+
+       const newElementI = document.createElement('i');
+       newElementI.classList.add('fa', cardsDeck[i]);
+
+ //New item add to fragment document.
+
+       newElement.appendChild(newElementI);
+       fragment.appendChild(newElement);
+
+     }
+
+ //Fragment document go to live.
+
+     document.querySelector('.deck').appendChild(fragment);
+
+ }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -36,3 +77,5 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+addCards();
