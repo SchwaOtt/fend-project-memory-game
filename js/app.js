@@ -1,3 +1,37 @@
+const cardHolder = {
+  items: [],
+  add: function (item) {
+
+    this.items.push(item);
+
+  },
+  check: function (arr) {
+
+    if (arr[this.items[0]] === arr[this.items[1]]) {
+      return true;
+    }else{
+      return false;
+    }
+  },
+  erase: function () {
+
+    this.items.splice(0, this.items.length)
+
+  }
+};
+
+const hits = {
+  items: [],
+  add: function (hit) {
+
+    hit.forEach(function (v) {
+
+      hits.items.push(v);
+
+    });
+  }
+};
+
 /*
  * Create a list that holds all of your cards
  */
@@ -18,7 +52,8 @@
  *   - add each card's HTML to the page
  */
 
- const cardsDeck = shuffle(cards);
+ const mixedCards = shuffle(cards);
+ const cardsDeck = document.querySelector('.deck');
 
  function addCards () {
 
@@ -31,23 +66,24 @@
  //Create "li" items and add initial classes to them.
 
        const newElement = document.createElement('li');
-       newElement.classList.add('card', 'open', 'show');
+       newElement.classList.add('card',/* 'open', 'show',*/ 'fa', mixedCards[i]);
+       newElement.setAttribute('id', i);
 
  //Create "i" items and add classes to them.
-
+/*
        const newElementI = document.createElement('i');
-       newElementI.classList.add('fa', cardsDeck[i]);
-
+       newElementI.classList.add('fa', mixedCards[i]);
+*/
  //New item add to fragment document.
 
-       newElement.appendChild(newElementI);
+       //newElement.appendChild(newElementI);
        fragment.appendChild(newElement);
 
      }
 
  //Fragment document go to live.
 
-     document.querySelector('.deck').appendChild(fragment);
+     cardsDeck.appendChild(fragment);
 
  }
 
@@ -77,5 +113,42 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+ cardsDeck.addEventListener('click', function (event) {
+
+   let result;
+
+   if (event.target.nodeName === 'LI' && hits.items.includes(event.target.getAttribute('id')) === false) {  // ← verifies target is desired element
+
+     event.target.classList.add('open', 'show');
+
+     if (cardHolder.items.length < 2) {
+
+       cardHolder.add(event.target.getAttribute('id'));
+       console.log(event.target.getAttribute('id'));
+
+     };
+
+     if (cardHolder.items.length === 2) {
+       result = cardHolder.check(mixedCards);
+       if (result === true) {
+         hits.add(cardHolder.items)
+         document.getElementById(cardHolder.items[0]).classList.add('match');
+         document.getElementById(cardHolder.items[1]).classList.add('match');
+         cardHolder.erase();
+         console.log('True');
+       }else{
+         setTimeout(function () {
+           document.getElementById(cardHolder.items[0]).classList.remove('open', 'show');
+           document.getElementById(cardHolder.items[1]).classList.remove('open', 'show');
+           cardHolder.erase();
+           console.log('False');
+         }, 1000);
+
+       };
+     };
+     //console.log(event.target.classList);
+   }
+ });
 
 addCards();
