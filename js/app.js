@@ -1,10 +1,14 @@
 const cardHolder = {
+
+//Storing cards.
   items: [],
   add: function (item) {
 
     this.items.push(item);
 
   },
+
+//Check matching...
   check: function (arr) {
 
     if (arr[this.items[0]] === arr[this.items[1]]) {
@@ -13,14 +17,53 @@ const cardHolder = {
       return false;
     }
   },
+
+//Clearing...
   erase: function () {
 
     this.items.splice(0, this.items.length)
 
-  }
-};
+  },
 
+//If the cards do match...
+  match: function () {
+
+    this.items.forEach(function (v) {
+
+      document.getElementById(v).classList.add('match');
+
+    });
+  },
+
+//If the cards do not match...
+  notMatch: function () {
+
+    this.items.forEach(function (v) {
+
+//Keep time before cards turn back. Decrease for harder and increase for easier gameplay.
+      setTimeout(function () {
+        document.getElementById(v).classList.add('close');
+        document.getElementById(v).classList.remove('open', 'show');
+
+//Time to turn the card back.
+        setTimeout(function() {
+          document.getElementById(v).classList.remove('close');
+        }, 300);
+      }, 1000);
+
+    });
+  }
+}
+
+//Storing matchings...
 const hits = {
+  clicks: 0,
+  click: function () {
+
+    hits.clicks += 1;
+    document.querySelector('.moves').textContent = hits.clicks;
+
+  },
   items: [],
   add: function (hit) {
 
@@ -30,7 +73,7 @@ const hits = {
 
     });
   }
-};
+}
 
 /*
  * Create a list that holds all of your cards
@@ -52,37 +95,29 @@ const hits = {
  *   - add each card's HTML to the page
  */
 
+//Shuffle the list of cards using the provided "shuffle" method below...
  const mixedCards = shuffle(cards);
  const cardsDeck = document.querySelector('.deck');
 
+//Loop through and add each...
  function addCards () {
 
- //Create a "fragment" document for faster running.
-
+//Create a "fragment" document for faster running.
    const fragment = document.createDocumentFragment();
 
    for (let i = 0; i < 16; i++) {
 
- //Create "li" items and add initial classes to them.
-
+//Create "li" items and add initial classes to them.
        const newElement = document.createElement('li');
        newElement.classList.add('card',/* 'open', 'show',*/ 'fa', mixedCards[i]);
        newElement.setAttribute('id', i);
 
- //Create "i" items and add classes to them.
-/*
-       const newElementI = document.createElement('i');
-       newElementI.classList.add('fa', mixedCards[i]);
-*/
- //New item add to fragment document.
-
-       //newElement.appendChild(newElementI);
+//Add to fragment...
        fragment.appendChild(newElement);
 
      }
 
- //Fragment document go to live.
-
+//Fragment document go to live.
      cardsDeck.appendChild(fragment);
 
  }
@@ -102,6 +137,23 @@ function shuffle(array) {
     return array;
 }
 
+function stars(num) {
+
+  const is = document.querySelectorAll('.fa-star');
+
+  if (num > 20) {
+    is[2].classList.remove('star-on');
+  }
+
+  if (num > 30) {
+    is[1].classList.remove('star-on');
+  }
+
+  if (num > 40) {
+    is[0].classList.remove('star-on');
+  }
+}
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -118,37 +170,61 @@ function shuffle(array) {
 
    let result;
 
-   if (event.target.nodeName === 'LI' && hits.items.includes(event.target.getAttribute('id')) === false) {  // ← verifies target is desired element
+//Verifies target is desired element...
+   if (event.target.nodeName === 'LI' && hits.items.includes(event.target.getAttribute('id')) === false && cardHolder.items.includes(event.target.getAttribute('id')) === false) {
 
-     event.target.classList.add('open', 'show');
+//Count clicking.
+  hits.click();
+  stars(hits.clicks);
 
+
+
+//If clicked max 2 cards.
      if (cardHolder.items.length < 2) {
 
        cardHolder.add(event.target.getAttribute('id'));
-       console.log(event.target.getAttribute('id'));
+       event.target.classList.add('open', 'show');
 
-     };
+     }
 
+//If has 2 clicked cards...
      if (cardHolder.items.length === 2) {
-       result = cardHolder.check(mixedCards);
-       if (result === true) {
-         hits.add(cardHolder.items)
-         document.getElementById(cardHolder.items[0]).classList.add('match');
-         document.getElementById(cardHolder.items[1]).classList.add('match');
-         cardHolder.erase();
-         console.log('True');
-       }else{
-         setTimeout(function () {
-           document.getElementById(cardHolder.items[0]).classList.remove('open', 'show');
-           document.getElementById(cardHolder.items[1]).classList.remove('open', 'show');
-           cardHolder.erase();
-           console.log('False');
-         }, 1000);
 
-       };
-     };
-     //console.log(event.target.classList);
+//Check matching...
+       result = cardHolder.check(mixedCards);
+
+//If matched...
+       if (result === true) {
+
+//Store matched cards.
+         hits.add(cardHolder.items);
+
+//Card's animations.
+         cardHolder.match();
+
+//Clear clicked cards.
+         cardHolder.erase();
+
+//If not matched...
+       }else{
+
+//Card's animations.
+         cardHolder.notMatch();
+
+//Clear clicked cards.
+         cardHolder.erase();
+
+       }
+     }
    }
  });
 
+//Reset page.
+document.querySelector('.fa-repeat').addEventListener('click', function () {
+
+  location.reload();
+
+});
+
+//Add cards to Deck.
 addCards();
