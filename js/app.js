@@ -55,7 +55,7 @@ const cardHolder = {
   }
 }
 
-//Storing matchings...
+//Store matchings...
 const hits = {
   clicks: 0,
   click: function () {
@@ -137,6 +137,7 @@ function shuffle(array) {
     return array;
 }
 
+//Performance with Stars.
 function stars(num) {
 
   const is = document.querySelectorAll('.fa-star');
@@ -182,7 +183,10 @@ function stars(num) {
 //If clicked max 2 cards.
      if (cardHolder.items.length < 2) {
 
+//Store selected card's number.
        cardHolder.add(event.target.getAttribute('id'));
+
+//Display.
        event.target.classList.add('open', 'show');
 
      }
@@ -205,6 +209,17 @@ function stars(num) {
 //Clear clicked cards.
          cardHolder.erase();
 
+//All card matched.
+         if (hits.items.length === 16) {
+
+//Winner popup message and open...
+           message.textContent = 'Your time is ' + document.querySelector('#timer').textContent + ' with ' + hits.clicks + ' Moves and ' + document.querySelectorAll('.star-on').length + (document.querySelectorAll('.star-on').length > 1 ? ' Stars.' : ' Star.');
+           modal.classList.add('modal-on');
+
+//Stop timer.
+           stopTimer();
+         }
+
 //If not matched...
        }else{
 
@@ -221,6 +236,13 @@ function stars(num) {
 
 //Reset page.
 document.querySelector('.fa-repeat').addEventListener('click', function () {
+
+  location.reload();
+
+});
+
+//Winner modal Start New Game.
+document.querySelector('.new-game').addEventListener('click', function () {
 
   location.reload();
 
