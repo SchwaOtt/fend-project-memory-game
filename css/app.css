@@ -193,3 +193,35 @@ h1 {
   pointer-events: none;
 
 }
+
+@media (max-width: 767px) {
+	.deck {
+		width: 90vw;
+    min-height: 90vw;
+    padding: 4vw;
+	}
+
+	.deck .card {
+		height: 17vw;
+		width: 17vw;
+	}
+
+  .score-panel {
+    width: 80vw;
+
+  }
+}
+
+@media (min-width: 768px) {
+
+	.deck {
+		width: 660px;
+		height: 680px;
+	}
+
+	.deck .card {
+		height: 125px;
+		width: 125px;
+	}
+
+}
