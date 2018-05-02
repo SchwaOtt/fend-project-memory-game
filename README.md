@@ -14,6 +14,7 @@ It is an easy game where you can test your memory.
 ## How to Play
 
 You can reach the game here: https://schwaott.github.io/fend-project-memory-game/
+![snippet](img/crop.jpg)
 
 ## Gameplay
 
