@@ -5,7 +5,16 @@
 * [What is...](#what is The Memory Game)
 * [How to...](#how to play)
 * [Gamepaly](#gameplay)
-* [Challenge](#challenge)
+* [Challenge](#challenge)<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [Memory Game Project](#memory-game-project)
+	- [Table of Contents](#table-of-contents)
+	- [What is the Memory Game](#what-is-the-memory-game)
+	- [How to Play](#how-to-play)
+	- [Gameplay](#gameplay)
+	- [Challenge](#challenge)
+
+<!-- /TOC -->
 
 ## What is the Memory Game
 
@@ -14,7 +23,7 @@ It is an easy game where you can test your memory.
 ## How to Play
 
 You can reach the game here: https://schwaott.github.io/fend-project-memory-game/
-![snippet](img/crop.jpg)
+![image](img/crop.jpg)
 
 ## Gameplay
 
