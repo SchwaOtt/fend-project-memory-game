@@ -42,16 +42,25 @@ const cardHolder = {
 
 //Keep time before cards turn back. Decrease for harder and increase for easier gameplay.
       setTimeout(function () {
+
         document.getElementById(v).classList.add('close');
         document.getElementById(v).classList.remove('open', 'show');
 
 //Time to turn the card back.
         setTimeout(function() {
+
           document.getElementById(v).classList.remove('close');
-        }, 300);
+
+        }, 600);
       }, 1000);
 
     });
+  },
+
+  open: function (element) {
+
+    element.classList.add('open', 'show');
+
   }
 }
 
@@ -142,17 +151,18 @@ function stars(num) {
 
   const is = document.querySelectorAll('.fa-star');
 
-  if (num > 20) {
+  if (num > 12) {
     is[2].classList.remove('star-on');
   }
 
-  if (num > 30) {
+  if (num > 20) {
     is[1].classList.remove('star-on');
   }
 
-  if (num > 40) {
+//That one star remains.
+/*  if (num > 40) {
     is[0].classList.remove('star-on');
-  }
+  }*/
 }
 
 
@@ -174,12 +184,6 @@ function stars(num) {
 //Verifies target is desired element...
    if (event.target.nodeName === 'LI' && hits.items.includes(event.target.getAttribute('id')) === false && cardHolder.items.includes(event.target.getAttribute('id')) === false) {
 
-//Count clicking.
-  hits.click();
-  stars(hits.clicks);
-
-
-
 //If clicked max 2 cards.
      if (cardHolder.items.length < 2) {
 
@@ -187,12 +191,18 @@ function stars(num) {
        cardHolder.add(event.target.getAttribute('id'));
 
 //Display.
-       event.target.classList.add('open', 'show');
-
+       cardHolder.open(event.target);
      }
 
 //If has 2 clicked cards...
      if (cardHolder.items.length === 2) {
+
+//Prevent clicking.
+       cardsDeck.classList.add('event-off');
+
+//Count clicking.
+       hits.click();
+       stars(hits.clicks);
 
 //Check matching...
        result = cardHolder.check(mixedCards);
@@ -230,6 +240,12 @@ function stars(num) {
          cardHolder.erase();
 
        }
+
+//Restore clicking.
+      setTimeout(function () {
+        cardsDeck.classList.remove('event-off');
+      }, 1000);
+
      }
    }
  });
