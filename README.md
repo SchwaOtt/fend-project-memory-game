@@ -1,11 +1,7 @@
 # Memory Game Project
 
 ## Table of Contents
-
-* [What is...](#what is The Memory Game)
-* [How to...](#how to play)
-* [Gamepaly](#gameplay)
-* [Challenge](#challenge)<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Memory Game Project](#memory-game-project)
 	- [Table of Contents](#table-of-contents)
@@ -13,9 +9,9 @@
 	- [How to Play](#how-to-play)
 	- [Gameplay](#gameplay)
 	- [Challenge](#challenge)
+	- [Required dependencies](#required-dependencies)
 
 <!-- /TOC -->
-
 ## What is the Memory Game
 
 It is an easy game where you can test your memory.
@@ -32,3 +28,7 @@ Take it in turn to pick two cards. If the cards have the same figur (two cube, f
 ## Challenge
 
 Try to pair with the fewest possible steps in the minimum time.
+
+## Required dependencies
+
+Use the latest version of your browser.
